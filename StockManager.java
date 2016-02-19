@@ -37,21 +37,12 @@ public class StockManager
      */
     public void delivery(int id, int amount)
     {
-        int index = 0;
-        boolean encontrado = false;
-        //Doy por supuesto que no puede haber id de productos 0
-        if (id < 1 || id > stock.size()) {
-            System.out.println("No hay nigun producto con el id " + id);
+        Product producto = findProduct(id);
+        if(producto != null){
+            producto.increaseQuantity(amount);
         }
-        else {
-            while (index < stock.size() && !encontrado) {
-                Product producto = stock.get(0);
-                if (id == producto.getID()) {
-                    producto.increaseQuantity(amount);
-                    encontrado = true;
-                }
-                index++;
-            }
+        else{
+            System.out.println("El id indicado no pertenece a ningun producto");
         }
     }
 
@@ -86,15 +77,9 @@ public class StockManager
     public int numberInStock(int id)
     {
         int cuantosProductosHay = 0;
-        int index = 0;
-        boolean encontrado = false;
-        while (index < stock.size() && !encontrado) {
-            Product producto = stock.get(0);
-            if (id == producto.getID()) {
-                encontrado = true;
-                cuantosProductosHay = producto.getQuantity();
-            }
-            index++;
+        Product producto = findProduct(id); 
+        if (producto != null) {
+            cuantosProductosHay = producto.getQuantity();
         }
         return cuantosProductosHay;
     }
@@ -106,6 +91,23 @@ public class StockManager
     {
         for (Product producto : stock) {
             System.out.println(producto);
+        }
+    }
+    
+    /**
+     * Imprime los detalles de todos los productos cuyo stock está por debajo de un determinado número que será pasado como parámetro
+     */
+    public void underGivenNumberInStock(int stockMaximo)
+    {
+        boolean hayStockPorDebajo = false;
+        for (Product producto : stock) {
+            if (producto.getQuantity() < stockMaximo) {
+                System.out.println(producto.toString());
+                hayStockPorDebajo = true;
+            }
+        }
+        if (hayStockPorDebajo == false) {
+            System.out.println("No hay productos con stock por debajo de " + stockMaximo);
         }
     }
 }
