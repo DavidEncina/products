@@ -26,7 +26,12 @@ public class StockManager
      */
     public void addProduct(Product item)
     {
-        stock.add(item);
+            if (findProduct(item.getID()) == null) {
+                stock.add(item);
+            }
+            else {
+                System.out.println("El id de este producto ya esta en uso el el stock.");
+            }
     }
 
     /**
@@ -93,7 +98,7 @@ public class StockManager
             System.out.println(producto);
         }
     }
-    
+
     /**
      * Imprime los detalles de todos los productos cuyo stock está por debajo de un determinado número que será pasado como parámetro
      */
