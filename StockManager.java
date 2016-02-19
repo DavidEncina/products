@@ -62,7 +62,7 @@ public class StockManager
         int index = 0;
         boolean encontrado = false;
         while (index < stock.size() && !encontrado) {  
-            Product producto = stock.get(0);
+            Product producto = stock.get(index);
             if (id == producto.getID()) {
                 productoEncontrado = producto;
                 encontrado = true;                
@@ -114,5 +114,24 @@ public class StockManager
         if (hayStockPorDebajo == false) {
             System.out.println("No hay productos con stock por debajo de " + stockMaximo);
         }
+    }
+    
+    /**
+     * Permite encontrar productos por su nombre
+     */
+    public Product findProduct(String name)
+    {
+        int index = 0;
+        boolean productoEncontrado = false;
+        Product productoBuscado = null;        
+        while (index < stock.size() && !productoEncontrado) {
+            Product producto = stock.get(index);
+            if (producto.getName().contains(name)) {
+                productoBuscado = producto;
+                productoEncontrado = true;
+            }
+            index++;
+        }
+        return productoBuscado;
     }
 }
